@@ -1,3 +1,4 @@
+const session = require('express-session')
 const mongoose = require('mongoose')
 const express = require('express')
 const handlebars = require('express-handlebars')
@@ -6,11 +7,16 @@ const bodyParser= require('body-parser')
 const app = express()
 const port = 3000
 
+const passport = require('./config/passport')
+
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist'))
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const db = require('./models')
 const Todo = require('./models/todo')
@@ -20,4 +26,4 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
 
-require('./routes')(app)
+require('./routes')(app, passport)

@@ -6,10 +6,10 @@ let todoController = {
       if (err) return console.error(err)
       if (req.params.id){
         Todo.findById(req.params.id, (err, todo) => {
-          return res.render('todos', {todos: todos, todo: todo})
+          return res.render('todos', {todos: todos, todo: todo, isAuthenticated: req.isAuthenticated()})
         })
       } else {
-        return res.render('todos', {todos: todos, todo: false})
+        return res.render('todos', {todos: todos, todo: false, isAuthenticated: req.isAuthenticated()})
       }
     })
   },
