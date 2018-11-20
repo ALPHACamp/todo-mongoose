@@ -10,7 +10,14 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 db.once('open', () => console.log(`Connected to MongoDB`))
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const Todo = require('./models/todo')
+
+app.get('/', (req, res) => {
+  Todo.find((err, todos) => {
+    if (err) return console.error(err)
+    return res.send(JSON.stringify(todos))
+  })
+})
 
 app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)
