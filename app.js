@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const handlebars = require('express-handlebars')
+const bodyParser= require('body-parser')
 const app = express()
 const port = 3000
 
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({extended: true}))
 
 const mongoURI = 'mongodb://127.0.0.1/todo-mongoose'
 mongoose.connect(mongoURI, { useNewUrlParser: true })
@@ -21,6 +23,34 @@ app.get('/', (req, res) => {
     if (err) return console.error(err)
     return res.render('index', {todos: todos})
   })
+})
+
+app.get('/todos', (req, res) => {
+  return res.send('get /todos')
+})
+
+app.get('/todos/new', (req, res) => {
+  return res.send('get /todos/new')
+})
+
+app.get('/todos/edit', (req, res) => {
+  return res.send('get /todos/edit')
+})
+
+app.get('/todos/:id', (req, res) => {
+  return res.send('get /todos/:id')
+})
+
+app.post('/todos', (req, res) => {
+  return res.send('post /todos')
+})
+
+app.put('/todos/:id', (req, res) => {
+  return res.send('put /todos/:id')
+})
+
+app.delete('/todos/:id', (req, res) => {
+  return res.send('delete /todos/:id')
 })
 
 app.listen(port, () =>
