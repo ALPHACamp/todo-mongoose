@@ -33,12 +33,13 @@ app.get('/todos', (req, res) => {
 })
 
 app.get('/todos/new', (req, res) => {
-  return res.send('get /todos/new')
+  return res.render('new')
 })
 
 app.get('/todos/edit', (req, res) => {
   return res.send('get /todos/edit')
 })
+
 
 app.get('/todos/:id', (req, res) => {
   Todo.findById(req.params.id, (err, todo) => {
@@ -48,12 +49,19 @@ app.get('/todos/:id', (req, res) => {
 })
 
 app.post('/todos', (req, res) => {
-  return res.send('post /todos')
+ const todo = Todo({
+    name: req.body.name,
+  })
+
+  todo.save((err) =>{
+    if (err) return console.error(err)
+    return res.redirect('/todos')
+  })
 })
 
 app.put('/todos/:id', (req, res) => {
   return res.send('put /todos/:id')
-})
+}
 
 app.delete('/todos/:id', (req, res) => {
   return res.send('delete /todos/:id')
