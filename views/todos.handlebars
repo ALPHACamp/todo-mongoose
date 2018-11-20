@@ -1,15 +1,28 @@
-<a href="/todos/new">Create</a>
+{{#if todo}}
+  <form action="/todos/{{{todo.id}}}?_method=PUT" method="POST">
+    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}}>
+    <input type="text" placeholder="name" name="name"
+     value="{{{todo.name}}}">
+    <button type="submit">Update</button>
+    <a href="/todos">or Create New</a>
+  </form>
+{{else}}
+  <form action="/todos" method="POST">
+    <input type="text" placeholder="name" name="name">
+    <button type="submit">Submit</button>
+  </form>
+{{/if}}
 
 <ul>
   {{#each todos}}
-    <li>
-      <input type="checkbox" name="done" {{#if this.done}}checked{{/if}} disabled>
-      {{{this.name}}}
-      <a href="/todos/{{{this.id}}}">detail</a>
-      <a href="/todos/{{{this.id}}}/edit">edit</a>
-      <form action="/todos/{{{this.id}}}?_method=DELETE" method="post" style="display: inline;">
-        <button type="submit">delete</button>
-      </form>
-    </li>
+  <li>
+    <input type="checkbox" name="done" {{#if this.done}}checked{{/if}} disabled>
+    {{{this.name}}} 
+    <a href="/todos/{{{this.id}}}"><button>edit</button></a>
+    <form action="/todos/{{{this.id}}}?_method=DELETE" method="POST"
+      style="display: inline;">
+      <button type="submit">delete</button>
+    </form>
+  </li>
   {{/each}}
 </ul>
