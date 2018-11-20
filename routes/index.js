@@ -7,6 +7,7 @@ module.exports = function (app, passport) {
     if (req.isAuthenticated()) {
       return next()
     }
+    req.flash('error_messages', 'You are not logged in')
     res.redirect('/signin')
   }
 
@@ -22,10 +23,12 @@ module.exports = function (app, passport) {
   app.post('/signin', 
     passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
     function(req, res) {
+      req.flash('success_messages', 'You are logged')
       res.redirect('/todos')
     }
   )
   app.get('/signup', (req, res) => {
+    req.flash('success_messages', 'You are registered now')
     return res.render('signup')
   })
   app.post('/signup', (req, res) => {
@@ -40,6 +43,7 @@ module.exports = function (app, passport) {
   })
   app.get('/logout', (req, res) => {
     req.logout()
+    req.flash('success_messages', 'You are logged out')
     res.redirect('/signin')
   })
 };

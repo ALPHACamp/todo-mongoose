@@ -8,8 +8,8 @@ passport.use(new LocalStrategy({
   function(req, username, password, cb) {
     User.findOne({ username: username }, function(err, user) {
       if (err) return cb(err)
-      if (!user) return cb(null, false)
-      if (user.password != password) return cb(null, false)
+      if (!user) return cb(null, false, req.flash('error_messages', 'You are not logged in'))
+      if (user.password != password) return cb(null, false, req.flash('error_messages', 'You are not logged in'))
       return cb(null, user)
     })
   }

@@ -1,3 +1,4 @@
+const flash = require('connect-flash')
 const session = require('express-session')
 const mongoose = require('mongoose')
 const express = require('express')
@@ -14,9 +15,15 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/node_modules/bootstrap/dist'))
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
+app.use(function(req, res, next){
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  next()
+})
 
 const db = require('./models')
 const Todo = require('./models/todo')
