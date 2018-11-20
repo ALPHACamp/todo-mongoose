@@ -1,0 +1,9 @@
+<ul>
+  {{#each todos}}
+    <li>
+      <input type="checkbox" name="done" {{#if this.done}}checked{{/if}}>
+      {{{this.name}}}
+      <a href="/todos/{{{this.id}}}">detail</a>
+    </li>
+  {{/each}}
+</ul>
