@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 const express = require('express')
+const handlebars = require('express-handlebars')
 const app = express()
 const port = 3000
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
 
 const mongoURI = 'mongodb://127.0.0.1/todo-mongoose'
 mongoose.connect(mongoURI, { useNewUrlParser: true })
@@ -15,7 +19,7 @@ const Todo = require('./models/todo')
 app.get('/', (req, res) => {
   Todo.find((err, todos) => {
     if (err) return console.error(err)
-    return res.send(JSON.stringify(todos))
+    return res.render('index', {todos: todos})
   })
 })
 
