@@ -8,5 +8,6 @@ module.exports = function (app) {
   app.post('/todos', todoController.postTodo)
   app.put('/todos/:id', todoController.putTodo)
   app.delete('/todos/:id', todoController.deleteTodo)
+  app.patch('/todos/:id/check', todoController.patchTodoCheck)
 
 };

@@ -1,6 +1,6 @@
 {{#if todo}}
   <form action="/todos/{{{todo.id}}}?_method=PUT" method="POST">
-    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}}>
+    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}} hidden>
     <input type="text" placeholder="name" name="name"
      value="{{{todo.name}}}">
     <button type="submit">Update</button>
@@ -16,7 +16,8 @@
 <ul>
   {{#each todos}}
   <li>
-    <input type="checkbox" name="done" {{#if this.done}}checked{{/if}} disabled>
+    <input type="checkbox" name="done" {{#if this.done}}checked{{/if}}
+      onchange="handleCheckboxClick('{{{this.id}}}', {{{this.done}}});"/>
     {{{this.name}}} 
     <a href="/todos/{{{this.id}}}"><button>edit</button></a>
     <form action="/todos/{{{this.id}}}?_method=DELETE" method="POST"
@@ -26,3 +27,13 @@
   </li>
   {{/each}}
 </ul>
+
+<script>
+function handleCheckboxClick(id, done){
+  fetch(`/todos/${id}/check?done=${!done}`, {
+    method: 'PATCH',
+  }).then(function(response){
+    location.reload()
+  })
+}
+</script>
