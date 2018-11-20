@@ -1,7 +1,8 @@
 <ul>
   <li>
-    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}}>
+    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}} disabled>
     {{{todo.name}}}
   </li>
 </ul>
 <a href="/todos">back</a>
+<a href="/todos/{{{todo.id}}}/edit">edit</a>
