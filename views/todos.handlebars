@@ -1,32 +1,38 @@
-{{#if todo}}
-  <form action="/todos/{{{todo.id}}}?_method=PUT" method="POST">
-    <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}} hidden>
-    <input type="text" placeholder="name" name="name"
-     value="{{{todo.name}}}">
-    <button type="submit">Update</button>
-    <a href="/todos">or Create New</a>
-  </form>
-{{else}}
-  <form action="/todos" method="POST">
-    <input type="text" placeholder="name" name="name">
-    <button type="submit">Submit</button>
-  </form>
-{{/if}}
-
-<ul>
-  {{#each todos}}
-  <li>
-    <input type="checkbox" name="done" {{#if this.done}}checked{{/if}}
-      onchange="handleCheckboxClick('{{{this.id}}}', {{{this.done}}});"/>
-    {{{this.name}}} 
-    <a href="/todos/{{{this.id}}}"><button>edit</button></a>
-    <form action="/todos/{{{this.id}}}?_method=DELETE" method="POST"
-      style="display: inline;">
-      <button type="submit">delete</button>
+<div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
+  {{#if todo}}
+    <form action="/todos/{{{todo.id}}}?_method=PUT" method="POST">
+      <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}} hidden>
+      <input type="text" placeholder="name" name="name"
+       value="{{{todo.name}}}">
+      <button type="submit">Update</button>
+      <a href="/todos">or Create New</a>
     </form>
-  </li>
+  {{else}}
+    <form action="/todos" method="POST">
+      <input type="text" placeholder="name" name="name">
+      <button type="submit">Submit</button>
+    </form>
+  {{/if}}
+</div>
+
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+  {{#each todos}}
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom 
+      border-gray">
+        <input type="checkbox" name="done" {{#if this.done}}checked{{/if}}
+          onchange="handleCheckboxClick('{{{this.id}}}', {{{this.done}}});"/>
+        {{{this.name}}} 
+      </p>
+      <a href="/todos/{{{this.id}}}"><button style="margin: 0 10px;">edit</button></a>
+      <form action="/todos/{{{this.id}}}?_method=DELETE" method="POST"
+        style="display: inline;">
+        <button type="submit">delete</button>
+      </form>
+    </div>
   {{/each}}
-</ul>
+</div>
 
 <script>
 function handleCheckboxClick(id, done){
