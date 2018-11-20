@@ -10,6 +10,7 @@ app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'))
 
 const db = require('./models')
 const Todo = require('./models/todo')
