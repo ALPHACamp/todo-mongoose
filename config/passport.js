@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const bcrypt = require('bcrypt-nodejs');
 const User = require('../models/user')
 
 passport.use(new LocalStrategy({
@@ -9,7 +10,7 @@ passport.use(new LocalStrategy({
     User.findOne({ username: username }, function(err, user) {
       if (err) return cb(err)
       if (!user) return cb(null, false, req.flash('error_messages', 'You are not logged in'))
-      if (user.password != password) return cb(null, false, req.flash('error_messages', 'You are not logged in'))
+      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', 'You are not logged in'))
       return cb(null, user)
     })
   }

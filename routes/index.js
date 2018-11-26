@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt-nodejs')
 const todoController = require('../controllers/todoController.js')
 const User = require('../models/user')
 
@@ -34,7 +35,7 @@ module.exports = function (app, passport) {
   app.post('/signup', (req, res) => {
     const user = new User({
       username: req.body.username,
-      password: req.body.password
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
     })
     user.save((err, user) =>{ 
       if (err) return console.error(err)
