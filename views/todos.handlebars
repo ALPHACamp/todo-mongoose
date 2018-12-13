@@ -1,9 +1,9 @@
 <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
   {{#if todo}}
-    <form action="/todos/{{{todo.id}}}?_method=PUT" method="POST">
+    <form action="/todos/{{todo.id}}?_method=PUT" method="POST">
       <input type="checkbox" name="done" {{#if todo.done}}checked{{/if}} hidden>
       <input type="text" placeholder="name" name="name"
-       value="{{{todo.name}}}">
+       value="{{todo.name}}">
       <button type="submit">Update</button>
       <a href="/todos">or Create New</a>
     </form>
@@ -22,11 +22,11 @@
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom 
       border-gray">
         <input type="checkbox" name="done" {{#if this.done}}checked{{/if}}
-          onchange="handleCheckboxClick('{{{this.id}}}', {{{this.done}}});"/>
-        {{{this.name}}} 
+          onchange="handleCheckboxClick('{{this.id}}', {{this.done}});"/>
+        {{this.name}} 
       </p>
-      <a href="/todos/{{{this.id}}}"><button style="margin: 0 10px;">edit</button></a>
-      <form action="/todos/{{{this.id}}}?_method=DELETE" method="POST"
+      <a href="/todos/{{this.id}}"><button style="margin: 0 10px;">edit</button></a>
+      <form action="/todos/{{this.id}}?_method=DELETE" method="POST"
         style="display: inline;">
         <button type="submit">delete</button>
       </form>

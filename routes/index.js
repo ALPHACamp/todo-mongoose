@@ -2,9 +2,8 @@ const bcrypt = require('bcrypt-nodejs')
 const todoController = require('../controllers/todoController.js')
 const User = require('../models/user')
 
-module.exports = function (app, passport) {
-
-  function authenticated (req, res, next) {
+module.exports = (app, passport) => {
+  const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
       return next()
     }
@@ -21,9 +20,9 @@ module.exports = function (app, passport) {
   app.patch('/todos/:id/check', todoController.patchTodoCheck)
 
   app.get('/signin', (req, res) => res.render('signin'))
-  app.post('/signin', 
+  app.post('/signin',
     passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
-    function(req, res) {
+    (req, res) => {
       req.flash('success_messages', 'You are logged')
       res.redirect('/todos')
     }
@@ -37,7 +36,7 @@ module.exports = function (app, passport) {
       username: req.body.username,
       password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
     })
-    user.save((err, user) =>{ 
+    user.save((err, user) => {
       if (err) return console.error(err)
       return res.redirect('/signin')
     })
@@ -47,4 +46,4 @@ module.exports = function (app, passport) {
     req.flash('success_messages', 'You are logged out')
     res.redirect('/signin')
   })
-};
+}

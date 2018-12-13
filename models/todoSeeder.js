@@ -8,9 +8,10 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 db.once('open', () => {
   console.log(`Connected to MongoDB`)
-  for (const x of Array(5).keys()) {
-    console.log(`generate name-${x} data`)
-    Todo.create({ name: `name-${x}` });
+
+  for (let i = 0; i < 5; i++) {
+    console.log(`generate name-${i} data`)
+    Todo.create({ name: `name-${i}` })
   }
-  console.log(`done`)
+  console.log('done')
 })
