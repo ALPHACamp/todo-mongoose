@@ -28,11 +28,11 @@ let todoController = {
     Todo.findById(req.params.id, (err, todo) => {
       if (err) return console.error(err)
       todo.name = req.body.name
-      
-      if (req.body.done === 'on') { 
-        todo.done = true 
-      } else { 
-        todo.done = false 
+
+      if (req.body.done === 'on') {
+        todo.done = true
+      } else {
+        todo.done = false
       }
 
       todo.save((err) => {
